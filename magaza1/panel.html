@@ -2,41 +2,68 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Elite Panel</title>
+    <title>FTHLABZ | Catalog Admin</title>
     <style>
-        body { background: #000; color: #c5a059; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
-        .card { background: #111; padding: 30px; width: 100%; max-width: 400px; border: 1px solid #222; }
-        input { width: 100%; padding: 10px; margin-bottom: 20px; background: #000; border: 1px solid #333; color: #fff; }
-        button { width: 100%; padding: 15px; background: #c5a059; border: none; font-weight: bold; cursor: pointer; }
+        body { background: #050505; color: #c5a059; font-family: sans-serif; padding: 20px; }
+        .panel { max-width: 500px; margin: 0 auto; background: #111; padding: 30px; border: 1px solid #222; }
+        .page-block { border: 1px solid #333; padding: 15px; margin-bottom: 20px; }
+        input { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #444; color: #fff; box-sizing: border-box; }
+        button { width: 100%; padding: 15px; background: #c5a059; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h3>MAĞAZA YÖNETİMİ</h3>
+    <div class="panel">
+        <h2 style="text-align: center;">KATALOG YÖNETİMİ</h2>
         <input type="text" id="magaza" placeholder="Mağaza Adı">
-        <input type="text" id="slogan" placeholder="Slogan">
-        <input type="text" id="urun" placeholder="Ürün Adı">
-        <input type="text" id="resim" placeholder="Resim URL">
-        <input type="text" id="fiyat" placeholder="Fiyat">
+        <input type="text" id="slogan" placeholder="Mağaza Sloganı">
+        <input type="number" id="sayfa_sayisi" placeholder="Sayfa Sayısı (1-5)" onchange="renderPages()">
         <input type="text" id="telefon" placeholder="WhatsApp (90...)">
-        <button onclick="save()">GÜNCELLE</button>
-        <p id="status"></p>
+        
+        <div id="pages-container"></div>
+        
+        <button onclick="saveAll()">TÜM KATALOĞU GÜNCELLE</button>
+        <p id="status" style="text-align:center"></p>
     </div>
 
     <script>
-        async function save() {
+        function renderPages() {
+            const count = document.getElementById('sayfa_sayisi').value;
+            const container = document.getElementById('pages-container');
+            container.innerHTML = "";
+            for(let i=1; i<=count; i++) {
+                container.innerHTML += `
+                    <div class="page-block">
+                        <div style="font-size: 0.7rem; color: #888;">SAYFA ${i} İÇERİĞİ</div>
+                        <input type="text" class="p-urun" placeholder="Ürün Adı">
+                        <input type="text" class="p-fiyat" placeholder="Fiyat">
+                        <input type="text" class="p-resim" placeholder="Resim URL">
+                    </div>
+                `;
+            }
+        }
+
+        async function saveAll() {
             const _p = ["gh", "p_", "vN8qBFrmBN", "NZfYen0xVk", "iKmKUyaE5R38wFdA"];
             const AUTH = _p.join('');
+            const kampanlar = [];
+            const urunler = document.querySelectorAll('.p-urun');
+            const fiyatlar = document.querySelectorAll('.p-fiyat');
+            const resimler = document.querySelectorAll('.p-resim');
+
+            urunler.forEach((u, i) => {
+                kampanlar.push({ urun: u.value, fiyat: fiyatlar[i].value, resim: resimler[i].value });
+            });
+
             const data = {
                 magaza: document.getElementById('magaza').value,
                 slogan: document.getElementById('slogan').value,
-                urun: document.getElementById('urun').value,
-                resim: document.getElementById('resim').value,
-                fiyat: document.getElementById('fiyat').value,
-                telefon: document.getElementById('telefon').value
+                sayfa_sayisi: document.getElementById('sayfa_sayisi').value,
+                telefon: document.getElementById('telefon').value,
+                kampanyalar: kampanlar
             };
+
             const status = document.getElementById('status');
-            status.innerText = "Yükleniyor...";
+            status.innerText = "Katalog İşleniyor...";
 
             try {
                 const res = await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`);
@@ -44,9 +71,9 @@
                 await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`, {
                     method: "PUT",
                     headers: { "Authorization": `token ${AUTH}`, "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: "Esnaf Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
+                    body: JSON.stringify({ message: "Multi-Page Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
                 });
-                status.innerText = "BAŞARILI!";
+                status.innerText = "KATALOG YAYINA ALINDI!";
             } catch (e) { status.innerText = "HATA!"; }
         }
     </script>

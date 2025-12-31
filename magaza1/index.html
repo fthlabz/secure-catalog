@@ -30,7 +30,6 @@
 
         .wa-btn { display: block; border: 1px solid var(--gold); color: var(--gold); padding: 12px; text-decoration: none; font-weight: bold; letter-spacing: 2px; font-size: 0.7rem; }
 
-        /* Footer Bar */
         .footer { position: fixed; bottom: 0; width: 100%; height: 60px; background: #000; border-top: 1px solid #111; display: flex; justify-content: space-around; align-items: center; z-index: 100; }
         .f-item { text-align: center; flex: 1; }
         .f-item small { display: block; font-size: 0.5rem; color: #444; letter-spacing: 1px; }
@@ -46,10 +45,10 @@
     <div class="slider" id="slider"></div>
 
     <div class="footer">
-        <div class="f-item"><small>MAĞAZA</small><span id="f-name">YÜKLENİYOR</span></div>
+        <div class="f-item"><small>MAĞAZA</small><span id="f-name">-</span></div>
         <div class="f-item">
             <div class="dots" id="dots"></div>
-            <div style="font-size: 8px; color: #333; margin-top: 4px;">KAYDIRIN</div>
+            <div id="scroll-hint" style="font-size: 8px; color: #333; margin-top: 4px;">KAYDIRIN</div>
         </div>
         <div class="f-item"><small>POWER BY</small><span>FTHLABZ</span></div>
     </div>
@@ -63,8 +62,12 @@
                 const res = await fetch('mesaj.json?v=' + Date.now());
                 const data = await res.json();
                 total = data.kampanyalar.length;
+                
                 document.getElementById('f-name').innerText = data.magaza;
                 
+                // Kaydır yazısını sadece 1'den fazla sayfa varsa göster
+                if (total <= 1) document.getElementById('scroll-hint').style.display = 'none';
+
                 const slider = document.getElementById('slider');
                 const dots = document.getElementById('dots');
 
@@ -87,15 +90,16 @@
                             </div>
                         </div>
                     `;
-                    dots.innerHTML += `<div class="dot ${i===0?'active':''}"></div>`;
+                    if (total > 1) dots.innerHTML += `<div class="dot ${i===0?'active':''}"></div>`;
                 });
                 
                 setupTouch();
                 confetti({ particleCount: 100, spread: 50, origin: { y: 0.8 }, colors: ['#d4af37', '#ffffff'] });
-            } catch (e) { document.body.innerHTML = "Veri yüklenemedi!"; }
+            } catch (e) { console.log(e); }
         }
 
         function setupTouch() {
+            if (total <= 1) return; // Tek sayfa ise kaydırmayı kapat
             let startX = 0;
             window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
             window.addEventListener('touchend', e => {

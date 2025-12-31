@@ -1,9 +1,9 @@
 {
-  "toplam_trafik": 0,
+  "toplam_trafik": 1,
   "magazalar": {
     "hali001": {
       "isim": "Saray Halı",
-      "tık": 0,
+      "tık": 1,
       "durum": "aktif"
     }
   }

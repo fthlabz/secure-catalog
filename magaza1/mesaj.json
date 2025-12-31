@@ -1,31 +1,23 @@
 {
-  "magaza": "FTHLABZ HALICILIK",
-  "slogan": "Dokusunda Kalite Var",
-  "telefon": "905000000000",
+  "magaza": "FATİH HALICILIK",
+  "slogan": "SLOGAN",
+  "telefon": "905373583095",
   "kampanyalar": [
     {
-      "urun": "Saray Serisi 6m²",
-      "aciklama": "Leke tutmaz, %100 Pamuk tabanlıdır. Özel dokuma.",
-      "resim": "https://images.unsplash.com/photo-1575414003591-ece8d0416c7a?q=80&w=800",
-      "eski_fiyat": "8.500",
-      "fiyat": "6.800",
-      "indirim": "%20 İNDİRİM"
+      "urun": "ÜRÜN ADI",
+      "aciklama": "AÇIKLAMA",
+      "resim": "https://www.halicizade.com/cdn/shop/files/ElDokumaAnadoluDesenliRengarenkYunTaspinarHali_9.jpg?v=1707137288&width=2048",
+      "eski_fiyat": "8500₺",
+      "fiyat": "6500₺",
+      "indirim": "%15"
     },
     {
-      "urun": "İpek Dokuma Halı",
-      "aciklama": "Yumuşak doku, kolay temizlenebilir şık tasarım.",
-      "resim": "https://images.unsplash.com/photo-1600166898405-da9535204843?q=80&w=800",
-      "eski_fiyat": "12.000",
-      "fiyat": "9.500",
-      "indirim": "%25 İNDİRİM"
-    },
-    {
-      "urun": "Modern Geometrik",
-      "aciklama": "Modern evler için antialerjik özel seri.",
-      "resim": "https://images.unsplash.com/photo-1534889156217-d3c8ed48ca44?q=80&w=800",
-      "eski_fiyat": "5.500",
-      "fiyat": "4.200",
-      "indirim": "%20 İNDİRİM"
+      "urun": "ÜRÜN ADI",
+      "aciklama": "AÇIKLAMA",
+      "resim": "RESİM URL",
+      "eski_fiyat": "ESKİ FİYAT",
+      "fiyat": "YENİ FİYAT",
+      "indirim": "15"
     }
   ]
 }

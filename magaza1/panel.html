@@ -3,34 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTHLABZ | MAĞAZA PANELİ</title>
+    <title>FTHLABZ | VIP MAĞAZA PANELİ</title>
     <style>
         :root { --gold: #d4af37; --bg: #050505; --card: #0f0f0f; --border: #222; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 40px 20px; display: flex; justify-content: center; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
         
-        .admin-wrapper { width: 100%; max-width: 650px; background: var(--card); border: 1px solid var(--border); padding: 40px; border-radius: 4px; box-shadow: 0 50px 100px rgba(0,0,0,0.5); position: relative; }
+        .admin-wrapper { width: 100%; max-width: 600px; background: var(--card); border: 1px solid var(--border); padding: 30px; position: relative; }
         
-        /* FTHLABZ Marka İmzası */
         .power-by { text-align: center; font-size: 0.6rem; letter-spacing: 5px; color: #444; margin-bottom: 10px; text-transform: uppercase; }
         .power-by b { color: var(--gold); }
+        h1 { text-align: center; font-weight: 200; letter-spacing: 5px; color: #fff; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
 
-        h1 { text-align: center; font-weight: 200; letter-spacing: 8px; color: #fff; margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px; text-transform: uppercase; }
-        
-        .section-label { font-size: 0.7rem; color: var(--gold); letter-spacing: 3px; margin-bottom: 15px; font-weight: bold; border-left: 3px solid var(--gold); padding-left: 10px; }
-        
-        .input-group { margin-bottom: 20px; }
-        label { display: block; font-size: 0.75rem; color: #888; margin-bottom: 8px; text-transform: uppercase; }
-        input, textarea { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px 15px; color: #fff; border-radius: 0; outline: none; transition: 0.3s; box-sizing: border-box; }
-        input:focus, textarea:focus { border-color: var(--gold); }
-        
-        .page-block { background: #000; border: 1px solid #1a1a1a; padding: 20px; margin-bottom: 30px; }
-        
-        .publish-btn { width: 100%; padding: 20px; background: transparent; color: var(--gold); border: 1px solid var(--gold); font-weight: bold; letter-spacing: 4px; cursor: pointer; transition: 0.4s; text-transform: uppercase; margin-top: 20px; }
-        .publish-btn:hover { background: var(--gold); color: #000; }
-        
-        #status { text-align: center; margin-top: 25px; font-size: 0.8rem; letter-spacing: 1px; }
-        .flex { display: flex; gap: 15px; }
-        .flex > div { flex: 1; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.7rem; color: var(--gold); margin-bottom: 5px; letter-spacing: 1px; }
+        input, textarea { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: #fff; outline: none; box-sizing: border-box; }
+        input:focus { border-color: var(--gold); }
+
+        /* Önizleme Alanı (Preview) */
+        .preview-box { 
+            width: 100%; height: 300px; background: #111; margin: 20px 0; position: relative; 
+            border: 1px dashed #333; overflow: hidden; background-size: cover; background-position: center;
+        }
+        .preview-badge-indirim { position: absolute; bottom: 15px; left: 15px; background: #ef4444; color: white; padding: 5px 10px; font-weight: bold; font-size: 0.8rem; }
+        .preview-badge-fiyat { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.8); color: var(--gold); padding: 5px 10px; border: 1px solid var(--gold); font-weight: bold; }
+        .preview-label { position: absolute; top: 10px; left: 10px; font-size: 0.6rem; color: #555; background: rgba(0,0,0,0.5); padding: 2px 5px; }
+
+        .publish-btn { width: 100%; padding: 20px; background: var(--gold); color: #000; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
+        .publish-btn:hover { filter: brightness(1.2); }
+        #status { text-align: center; margin-top: 15px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
@@ -39,122 +39,110 @@
     <div class="power-by">POWER BY <b>FTHLABZ</b></div>
     <h1>MAĞAZA PANELİ</h1>
 
-    <div class="section-label">GENEL MAĞAZA AYARLARI</div>
     <div class="input-group">
-        <label>Mağaza Adı</label>
-        <input type="text" id="magaza" placeholder="Örn: Saray Halı Elite">
+        <label>MAĞAZA ADI</label>
+        <input type="text" id="magaza" placeholder="Örn: FTHLABZ Halıcılık">
     </div>
+
     <div class="input-group">
-        <label>Mağaza Sloganı</label>
-        <input type="text" id="slogan" placeholder="Örn: İlmek İlmek Lüks">
+        <label>MAĞAZA SLOGANI</label>
+        <input type="text" id="slogan" placeholder="Örn: Dokusunda Kalite Var">
     </div>
-    <div class="flex">
-        <div class="input-group">
-            <label>WhatsApp No (90...)</label>
-            <input type="text" id="telefon" placeholder="905xxxxxxxxx">
+
+    <div class="input-group">
+        <label>ÜRÜN ADI</label>
+        <input type="text" id="urun" placeholder="Örn: Saray Serisi 6m²">
+    </div>
+
+    <div class="input-group">
+        <label>ÜRÜN AÇIKLAMASI</label>
+        <textarea id="aciklama" rows="2" placeholder="Örn: Leke tutmaz, %100 Pamuk tabanlıdır"></textarea>
+    </div>
+
+    <div class="input-group">
+        <label>ÜRÜN RESİM URL</label>
+        <input type="text" id="resim" placeholder="https://..." oninput="updatePreview()">
+    </div>
+
+    <div class="preview-box" id="preview-bg">
+        <div class="preview-label">GÖRSEL ÖNİZLEME</div>
+        <div class="preview-badge-indirim" id="pre-indirim">%0 İNDİRİM</div>
+        <div class="preview-badge-fiyat" id="pre-fiyat">0.00 TL</div>
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+        <div class="input-group" style="flex:1">
+            <label>İNDİRİM (%)</label>
+            <input type="text" id="indirim" placeholder="%10" oninput="updatePreview()">
         </div>
-        <div class="input-group">
-            <label>Sayfa Sayısı</label>
-            <input type="number" id="sayfa_sayisi" min="1" max="10" onchange="createPageEditors()" placeholder="Kaç kampanya?">
+        <div class="input-group" style="flex:1">
+            <label>FİYAT</label>
+            <input type="text" id="fiyat" placeholder="5.400 TL" oninput="updatePreview()">
         </div>
     </div>
 
-    <div id="editor-container"></div>
+    <div class="input-group">
+        <label>WHATSAPP NUMARASI</label>
+        <input type="text" id="telefon" placeholder="905000000000">
+    </div>
 
-    <button class="publish-btn" onclick="publishCatalog()">KAMPANYAYI YAYINLA</button>
+    <button class="publish-btn" onclick="publish()">KAMPANYAYI YAYINLA</button>
     <div id="status"></div>
 </div>
 
 <script>
-    function createPageEditors() {
-        const count = document.getElementById('sayfa_sayisi').value;
-        const container = document.getElementById('editor-container');
-        container.innerHTML = `<div class="section-label" style="margin-top:40px;">KAMPANYA DETAYLARI</div>`;
-        
-        for(let i=1; i<=count; i++) {
-            container.innerHTML += `
-                <div class="page-block">
-                    <div style="font-size: 0.6rem; color: #555; margin-bottom: 15px;">KAMPANYA SAYFASI #${i}</div>
-                    <div class="input-group">
-                        <label>Ürün Adı</label>
-                        <input type="text" class="p-urun" placeholder="Örn: Kaşmir İpek Halı">
-                    </div>
-                    <div class="input-group">
-                        <label>Ürün Açıklaması</label>
-                        <textarea class="p-aciklama" rows="2" placeholder="Örn: 6m², Antialerjik, Özel Dokuma"></textarea>
-                    </div>
-                    <div class="input-group">
-                        <label>Resim URL</label>
-                        <input type="text" class="p-resim" placeholder="https://...">
-                    </div>
-                    <div class="flex">
-                        <div class="input-group">
-                            <label>Fiyat</label>
-                            <input type="text" class="p-fiyat" placeholder="12.500 TL">
-                        </div>
-                        <div class="input-group">
-                            <label>İndirim Oranı</label>
-                            <input type="text" class="p-indirim" placeholder="%20 İndirim">
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
+    // Canlı Önizleme Güncelleme
+    function updatePreview() {
+        const imgUrl = document.getElementById('resim').value;
+        const indirim = document.getElementById('indirim').value;
+        const fiyat = document.getElementById('fiyat').value;
+
+        if(imgUrl) document.getElementById('preview-bg').style.backgroundImage = `url('${imgUrl}')`;
+        document.getElementById('pre-indirim').innerText = indirim || "%0 İNDİRİM";
+        document.getElementById('pre-fiyat').innerText = fiyat || "0.00 TL";
     }
 
-    async function publishCatalog() {
+    async function publish() {
         const _p = ["gh", "p_", "vN8qBFrmBN", "NZfYen0xVk", "iKmKUyaE5R38wFdA"];
         const AUTH = _p.join('');
         const status = document.getElementById('status');
         
-        const kampanyaListesi = [];
-        const urunler = document.querySelectorAll('.p-urun');
-        const aciklamalar = document.querySelectorAll('.p-aciklama');
-        const resimler = document.querySelectorAll('.p-resim');
-        const fiyatlar = document.querySelectorAll('.p-fiyat');
-        const indirimler = document.querySelectorAll('.p-indirim');
-
-        urunler.forEach((u, i) => {
-            kampanyaListesi.push({
-                urun: u.value,
-                aciklama: aciklamalar[i].value,
-                resim: resimler[i].value,
-                fiyat: fiyatlar[i].value,
-                indirim: indirimler[i].value
-            });
-        });
-
         const data = {
             magaza: document.getElementById('magaza').value,
             slogan: document.getElementById('slogan').value,
+            urun: document.getElementById('urun').value,
+            aciklama: document.getElementById('aciklama').value,
+            resim: document.getElementById('resim').value,
+            indirim: document.getElementById('indirim').value,
+            fiyat: document.getElementById('fiyat').value,
             telefon: document.getElementById('telefon').value,
-            sayfa_sayisi: document.getElementById('sayfa_sayisi').value,
-            kampanyalar: kampanyaListesi
+            kampanyalar: [{ // Eski yapıya uyum için tekli kampanya dizisi
+                urun: document.getElementById('urun').value,
+                aciklama: document.getElementById('aciklama').value,
+                resim: document.getElementById('resim').value,
+                fiyat: document.getElementById('fiyat').value,
+                indirim: document.getElementById('indirim').value
+            }]
         };
 
-        status.innerHTML = "<span style='color: #888;'>Sistem Güncelleniyor...</span>";
+        status.innerHTML = "Sistem İşleniyor...";
 
         try {
             const res = await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`);
             const file = await res.json();
             
-            const response = await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`, {
+            await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`, {
                 method: "PUT",
                 headers: { "Authorization": `token ${AUTH}`, "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    message: "Full Catalog Update",
+                    message: "VIP Catalog Update",
                     content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))),
                     sha: file.sha
                 })
             });
-
-            if(response.ok) {
-                status.innerHTML = "<span style='color: var(--gold); font-weight:bold;'>✅ KAMPANYA BAŞARIYLA YAYINLANDI!</span>";
-            } else {
-                status.innerHTML = "<span style='color: red;'>❌ GÜNCELLEME HATASI!</span>";
-            }
+            status.innerHTML = "<b style='color:var(--gold)'>✅ KAMPANYA BAŞARIYLA YAYINLANDI!</b>";
         } catch (e) {
-            status.innerHTML = "<span style='color: red;'>❌ BAĞLANTI HATASI!</span>";
+            status.innerHTML = "<b style='color:red'>❌ HATA OLUŞTU!</b>";
         }
     }
 </script>

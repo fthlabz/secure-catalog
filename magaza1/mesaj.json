@@ -1,23 +1,23 @@
 {
-  "magaza": "SARAY HALI ELITE",
-  "slogan": "FTHLABZ POWER İLE DİJİTAL DÖNÜŞÜM",
-  "sayfa_sayisi": 3,
-  "telefon": "905000000000",
+  "magaza": "fatih halı ",
+  "slogan": "deneme",
+  "sayfa_sayisi": "3",
+  "telefon": "9005373583095",
   "kampanyalar": [
     {
-      "urun": "İpek Klasik",
-      "fiyat": "12.000 TL",
-      "resim": "https://images.unsplash.com/photo-1575414003591-ece8d0416c7a?q=80&w=800"
+      "urun": "halı",
+      "fiyat": "300",
+      "resim": "jskjjkbkbkjbsc"
     },
     {
-      "urun": "Modern Geometrik",
-      "fiyat": "8.500 TL",
-      "resim": "https://images.unsplash.com/photo-1600166898405-da9535204843?q=80&w=800"
+      "urun": "cslkchksjc",
+      "fiyat": "500",
+      "resim": "scscscsc"
     },
     {
-      "urun": "Yün El Dokuma",
-      "fiyat": "15.000 TL",
-      "resim": "https://images.unsplash.com/photo-1594051664297-6234324d041e?q=80&w=800"
+      "urun": "cscscs",
+      "fiyat": "scsc",
+      "resim": "scscs"
     }
   ]
 }

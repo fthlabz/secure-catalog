@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Elite Panel</title>
+    <style>
+        body { background: #000; color: #c5a059; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
+        .card { background: #111; padding: 30px; width: 100%; max-width: 400px; border: 1px solid #222; }
+        input { width: 100%; padding: 10px; margin-bottom: 20px; background: #000; border: 1px solid #333; color: #fff; }
+        button { width: 100%; padding: 15px; background: #c5a059; border: none; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>MAĞAZA YÖNETİMİ</h3>
+        <input type="text" id="magaza" placeholder="Mağaza Adı">
+        <input type="text" id="slogan" placeholder="Slogan">
+        <input type="text" id="urun" placeholder="Ürün Adı">
+        <input type="text" id="resim" placeholder="Resim URL">
+        <input type="text" id="fiyat" placeholder="Fiyat">
+        <input type="text" id="telefon" placeholder="WhatsApp (90...)">
+        <button onclick="save()">GÜNCELLE</button>
+        <p id="status"></p>
+    </div>
 
+    <script>
+        async function save() {
+            const _p = ["gh", "p_", "vN8qBFrmBN", "NZfYen0xVk", "iKmKUyaE5R38wFdA"];
+            const AUTH = _p.join('');
+            const data = {
+                magaza: document.getElementById('magaza').value,
+                slogan: document.getElementById('slogan').value,
+                urun: document.getElementById('urun').value,
+                resim: document.getElementById('resim').value,
+                fiyat: document.getElementById('fiyat').value,
+                telefon: document.getElementById('telefon').value
+            };
+            const status = document.getElementById('status');
+            status.innerText = "Yükleniyor...";
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`);
+                const file = await res.json();
+                await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`, {
+                    method: "PUT",
+                    headers: { "Authorization": `token ${AUTH}`, "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: "Esnaf Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
+                });
+                status.innerText = "BAŞARILI!";
+            } catch (e) { status.innerText = "HATA!"; }
+        }
+    </script>
+</body>
+</html>

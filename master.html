@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>SECURE MASTER</title>
+    <style>
+        body { background: #000; color: #c5a059; font-family: sans-serif; text-align: center; }
+        .card { border: 1px solid #222; padding: 20px; margin: 10px; display: inline-block; width: 200px; }
+    </style>
+</head>
+<body>
+    <h1>🛡️ SECURE CATALOG MASTER</h1>
+    <h2 id="genel">Toplam Trafik: 0</h2>
+    <div id="liste"></div>
+
+    <script>
+        async function load() {
+            const res = await fetch('data.json?v=' + Date.now());
+            const d = await res.json();
+            document.getElementById('genel').innerText = "Toplam Trafik: " + d.toplam_trafik;
+            let h = "";
+            for(let id in d.magazalar) {
+                h += `<div class="card"><h3>${d.magazalar[id].isim}</h3><p>Tık: ${d.magazalar[id].tık}</p></div>`;
+            }
+            document.getElementById('liste').innerHTML = h;
+        }
+        load();
+    </script>
+</body>
+</html>

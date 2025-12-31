@@ -1,23 +1,22 @@
 {
-  "magaza": "fatih halı ",
-  "slogan": "deneme",
-  "sayfa_sayisi": "3",
-  "telefon": "9005373583095",
+  "magaza": "fatih halıcılık",
+  "slogan": "şlmek şlmek",
+  "telefon": "905373583095",
+  "sayfa_sayisi": "2",
   "kampanyalar": [
     {
-      "urun": "halı",
-      "fiyat": "300",
-      "resim": "jskjjkbkbkjbsc"
+      "urun": "werfefesf",
+      "aciklama": "efsefesges",
+      "resim": "https://www.ezgihali.com/wp-content/uploads/2022/03/WhatsApp-Image-2022-06-30-at-18.36.48-1500x1126.jpeg",
+      "fiyat": "57657",
+      "indirim": "20"
     },
     {
-      "urun": "cslkchksjc",
-      "fiyat": "500",
-      "resim": "scscscsc"
-    },
-    {
-      "urun": "cscscs",
-      "fiyat": "scsc",
-      "resim": "scscs"
+      "urun": "dfgdgdg",
+      "aciklama": "dgdgdg",
+      "resim": "dgdsg",
+      "fiyat": "gdsgdsg",
+      "indirim": "dgdg"
     }
   ]
 }

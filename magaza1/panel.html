@@ -2,36 +2,38 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>FTHLABZ | 3 SAYFALI PANEL</title>
+    <title>FTHLABZ | MAĞAZA YÖNETİMİ</title>
     <style>
         :root { --gold: #d4af37; --bg: #050505; --border: #222; }
         body { background: var(--bg); color: white; font-family: sans-serif; padding: 20px; display: flex; justify-content: center; }
         .wrapper { width: 100%; max-width: 500px; background: #0a0a0a; border: 1px solid var(--border); padding: 25px; }
         .power { text-align: center; font-size: 0.5rem; letter-spacing: 4px; color: #444; margin-bottom: 10px; }
-        h1 { text-align: center; font-weight: 200; letter-spacing: 4px; font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        h1 { text-align: center; font-weight: 200; letter-spacing: 4px; font-size: 1.2rem; border-bottom: 1px solid var(--border); padding-bottom: 15px; text-transform: uppercase; }
         .group { margin-bottom: 12px; }
         label { display: block; font-size: 0.65rem; color: var(--gold); margin-bottom: 4px; }
         input, textarea { width: 100%; background: #000; border: 1px solid var(--border); padding: 10px; color: #fff; outline: none; font-size: 0.8rem; }
-        .page-box { background: #111; padding: 15px; margin-bottom: 20px; border-left: 2px solid var(--gold); }
+        .page-box { background: #111; padding: 15px; margin-bottom: 20px; border-left: 2px solid var(--gold); position: relative; }
+        .page-box::after { content: "BOŞ BIRAKILIRSA YAYINLANMAZ"; position: absolute; top: 5px; right: 10px; font-size: 0.5rem; color: #333; }
         .pub-btn { width: 100%; padding: 18px; background: var(--gold); color: #000; border: none; font-weight: bold; cursor: pointer; letter-spacing: 2px; }
+        #status { text-align: center; margin-top: 15px; font-size: 0.7rem; }
     </style>
 </head>
 <body>
 <div class="wrapper">
     <div class="power">POWER BY <b>FTHLABZ</b></div>
-    <h1>MAĞAZA YÖNETİMİ (3 SAYFA)</h1>
+    <h1>MAĞAZA YÖNETİMİ</h1>
     
     <div class="group"><label>MAĞAZA ADI</label><input type="text" id="magaza"></div>
     <div class="group"><label>MAĞAZA SLOGANI</label><input type="text" id="slogan"></div>
     <div class="group"><label>WHATSAPP (90...)</label><input type="text" id="tel"></div>
 
-    <div id="pages">
+    <div id="pages-area">
         <script>
             for(let i=1; i<=3; i++) {
                 document.write(`
                     <div class="page-box">
-                        <div style="font-size:0.6rem; color:#666; margin-bottom:10px">SAYFA ${i}</div>
-                        <input type="text" class="p-urun" placeholder="Ürün Adı">
+                        <div style="font-size:0.6rem; color:var(--gold); margin-bottom:10px">KAMPANYA #${i}</div>
+                        <input type="text" class="p-urun" placeholder="Ürün Adı (Doldurmazsanız bu sayfa gizlenir)">
                         <textarea class="p-aciklama" rows="2" placeholder="Açıklama"></textarea>
                         <input type="text" class="p-resim" placeholder="Resim URL">
                         <div style="display:flex; gap:5px; margin-top:5px">
@@ -46,7 +48,7 @@
     </div>
 
     <button class="pub-btn" onclick="send()">KAMPANYAYI YAYINLA</button>
-    <p id="status" style="text-align:center; font-size:0.7rem"></p>
+    <div id="status"></div>
 </div>
 
 <script>
@@ -62,10 +64,13 @@
         const indirimler = document.querySelectorAll('.p-indirim');
 
         urunler.forEach((u, i) => {
-            kampanyaListesi.push({
-                urun: u.value, aciklama: aciklamalar[i].value, resim: resimler[i].value,
-                eski_fiyat: eskiler[i].value, fiyat: yeniler[i].value, indirim: indirimler[i].value
-            });
+            // SADECE ÜRÜN ADI DOLU OLANLARI LİSTEYE EKLE
+            if (u.value.trim() !== "") {
+                kampanyaListesi.push({
+                    urun: u.value, aciklama: aciklamalar[i].value, resim: resimler[i].value,
+                    eski_fiyat: eskiler[i].value, fiyat: yeniler[i].value, indirim: indirimler[i].value
+                });
+            }
         });
 
         const data = {
@@ -75,17 +80,19 @@
             kampanyalar: kampanyaListesi
         };
 
-        document.getElementById('status').innerText = "Güncelleniyor...";
+        const status = document.getElementById('status');
+        status.innerText = "Yükleniyor...";
+
         try {
             const res = await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`);
             const file = await res.json();
             await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`, {
                 method: "PUT",
                 headers: { "Authorization": `token ${AUTH}`, "Content-Type": "application/json" },
-                body: JSON.stringify({ message: "3-Page Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
+                body: JSON.stringify({ message: "Smart Catalog Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
             });
-            document.getElementById('status').innerHTML = "<b style='color:var(--gold)'>✅ YAYINLANDI!</b>";
-        } catch (e) { document.getElementById('status').innerText = "Hata!"; }
+            status.innerHTML = "<b style='color:var(--gold)'>✅ YAYINLANDI!</b>";
+        } catch (e) { status.innerText = "Hata oluştu!"; }
     }
 </script>
 </body>

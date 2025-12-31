@@ -3,110 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FTHLABZ | VIP MAĞAZA PANELİ</title>
+    <title>FTHLABZ | MAĞAZA YÖNETİMİ</title>
     <style>
         :root { --gold: #d4af37; --bg: #050505; --card: #0f0f0f; --border: #222; }
-        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
-        
-        .admin-wrapper { width: 100%; max-width: 600px; background: var(--card); border: 1px solid var(--border); padding: 30px; position: relative; }
-        
-        .power-by { text-align: center; font-size: 0.6rem; letter-spacing: 5px; color: #444; margin-bottom: 10px; text-transform: uppercase; }
-        .power-by b { color: var(--gold); }
-        h1 { text-align: center; font-weight: 200; letter-spacing: 5px; color: #fff; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
-
-        .input-group { margin-bottom: 15px; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', sans-serif; padding: 20px; display: flex; justify-content: center; }
+        .wrapper { width: 100%; max-width: 550px; background: var(--card); border: 1px solid var(--border); padding: 30px; }
+        .power { text-align: center; font-size: 0.6rem; letter-spacing: 5px; color: #444; margin-bottom: 10px; }
+        h1 { text-align: center; font-weight: 200; letter-spacing: 5px; margin-bottom: 30px; border-bottom: 1px solid var(--border); padding-bottom: 15px; }
+        .group { margin-bottom: 15px; }
         label { display: block; font-size: 0.7rem; color: var(--gold); margin-bottom: 5px; letter-spacing: 1px; }
         input, textarea { width: 100%; background: #000; border: 1px solid var(--border); padding: 12px; color: #fff; outline: none; box-sizing: border-box; }
         input:focus { border-color: var(--gold); }
-
-        /* Önizleme Alanı (Preview) */
-        .preview-box { 
-            width: 100%; height: 300px; background: #111; margin: 20px 0; position: relative; 
-            border: 1px dashed #333; overflow: hidden; background-size: cover; background-position: center;
-        }
-        .preview-badge-indirim { position: absolute; bottom: 15px; left: 15px; background: #ef4444; color: white; padding: 5px 10px; font-weight: bold; font-size: 0.8rem; }
-        .preview-badge-fiyat { position: absolute; bottom: 15px; right: 15px; background: rgba(0,0,0,0.8); color: var(--gold); padding: 5px 10px; border: 1px solid var(--gold); font-weight: bold; }
-        .preview-label { position: absolute; top: 10px; left: 10px; font-size: 0.6rem; color: #555; background: rgba(0,0,0,0.5); padding: 2px 5px; }
-
-        .publish-btn { width: 100%; padding: 20px; background: var(--gold); color: #000; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; transition: 0.3s; }
-        .publish-btn:hover { filter: brightness(1.2); }
+        .preview { width: 100%; height: 250px; background: #111; margin: 20px 0; border: 1px dashed #333; background-size: cover; background-position: center; position: relative; }
+        .pre-badge { position: absolute; bottom: 10px; left: 10px; background: #ef4444; color: white; padding: 5px; font-size: 0.7rem; font-weight: bold; }
+        .pre-price { position: absolute; bottom: 10px; right: 10px; color: var(--gold); background: rgba(0,0,0,0.8); padding: 5px; border: 1px solid var(--gold); font-size: 0.8rem; }
+        .pub-btn { width: 100%; padding: 20px; background: var(--gold); color: #000; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; text-transform: uppercase; }
         #status { text-align: center; margin-top: 15px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
-
-<div class="admin-wrapper">
-    <div class="power-by">POWER BY <b>FTHLABZ</b></div>
+<div class="wrapper">
+    <div class="power">POWER BY <b>FTHLABZ</b></div>
     <h1>MAĞAZA PANELİ</h1>
-
-    <div class="input-group">
-        <label>MAĞAZA ADI</label>
-        <input type="text" id="magaza" placeholder="Örn: FTHLABZ Halıcılık">
+    <div class="group"><label>MAĞAZA ADI</label><input type="text" id="magaza" placeholder="Örn: FTHLABZ Halıcılık"></div>
+    <div class="group"><label>MAĞAZA SLOGANI</label><input type="text" id="slogan" placeholder="Dokusunda Kalite Var"></div>
+    <div class="group"><label>ÜRÜN ADI</label><input type="text" id="urun" placeholder="Saray Serisi 6m²"></div>
+    <div class="group"><label>ÜRÜN AÇIKLAMASI</label><textarea id="aciklama" rows="2" placeholder="Leke tutmaz..."></textarea></div>
+    <div class="group"><label>RESİM URL</label><input type="text" id="resim" oninput="draw()"></div>
+    <div class="preview" id="v-bg"><div class="pre-badge" id="v-indirim">%0 İNDİRİM</div><div class="pre-price" id="v-fiyat">0 TL</div></div>
+    <div style="display:flex; gap:10px;">
+        <div class="group" style="flex:1"><label>ESKİ FİYAT</label><input type="text" id="eski" oninput="draw()"></div>
+        <div class="group" style="flex:1"><label>YENİ FİYAT</label><input type="text" id="yeni" oninput="draw()"></div>
     </div>
-
-    <div class="input-group">
-        <label>MAĞAZA SLOGANI</label>
-        <input type="text" id="slogan" placeholder="Örn: Dokusunda Kalite Var">
-    </div>
-
-    <div class="input-group">
-        <label>ÜRÜN ADI</label>
-        <input type="text" id="urun" placeholder="Örn: Saray Serisi 6m²">
-    </div>
-
-    <div class="input-group">
-        <label>ÜRÜN AÇIKLAMASI</label>
-        <textarea id="aciklama" rows="2" placeholder="Örn: Leke tutmaz, %100 Pamuk tabanlıdır"></textarea>
-    </div>
-
-    <div class="input-group">
-        <label>ÜRÜN RESİM URL</label>
-        <input type="text" id="resim" placeholder="https://..." oninput="updatePreview()">
-    </div>
-
-    <div class="preview-box" id="preview-bg">
-        <div class="preview-label">GÖRSEL ÖNİZLEME</div>
-        <div class="preview-badge-indirim" id="pre-indirim">%0 İNDİRİM</div>
-        <div class="preview-badge-fiyat" id="pre-fiyat">0.00 TL</div>
-    </div>
-
-    <div style="display: flex; gap: 10px;">
-        <div class="input-group" style="flex:1">
-            <label>İNDİRİM (%)</label>
-            <input type="text" id="indirim" placeholder="%10" oninput="updatePreview()">
-        </div>
-        <div class="input-group" style="flex:1">
-            <label>FİYAT</label>
-            <input type="text" id="fiyat" placeholder="5.400 TL" oninput="updatePreview()">
-        </div>
-    </div>
-
-    <div class="input-group">
-        <label>WHATSAPP NUMARASI</label>
-        <input type="text" id="telefon" placeholder="905000000000">
-    </div>
-
-    <button class="publish-btn" onclick="publish()">KAMPANYAYI YAYINLA</button>
+    <div class="group"><label>İNDİRİM (%)</label><input type="text" id="indirim" oninput="draw()" placeholder="%20"></div>
+    <div class="group"><label>WHATSAPP (90...)</label><input type="text" id="tel"></div>
+    <button class="pub-btn" onclick="send()">KAMPANYAYI YAYINLA</button>
     <div id="status"></div>
 </div>
-
 <script>
-    // Canlı Önizleme Güncelleme
-    function updatePreview() {
-        const imgUrl = document.getElementById('resim').value;
-        const indirim = document.getElementById('indirim').value;
-        const fiyat = document.getElementById('fiyat').value;
-
-        if(imgUrl) document.getElementById('preview-bg').style.backgroundImage = `url('${imgUrl}')`;
-        document.getElementById('pre-indirim').innerText = indirim || "%0 İNDİRİM";
-        document.getElementById('pre-fiyat').innerText = fiyat || "0.00 TL";
+    function draw() {
+        document.getElementById('v-bg').style.backgroundImage = `url('${document.getElementById('resim').value}')`;
+        document.getElementById('v-indirim').innerText = document.getElementById('indirim').value || "%0";
+        document.getElementById('v-fiyat').innerText = document.getElementById('yeni').value || "0 TL";
     }
-
-    async function publish() {
+    async function send() {
         const _p = ["gh", "p_", "vN8qBFrmBN", "NZfYen0xVk", "iKmKUyaE5R38wFdA"];
         const AUTH = _p.join('');
-        const status = document.getElementById('status');
-        
         const data = {
             magaza: document.getElementById('magaza').value,
             slogan: document.getElementById('slogan').value,
@@ -114,36 +56,21 @@
             aciklama: document.getElementById('aciklama').value,
             resim: document.getElementById('resim').value,
             indirim: document.getElementById('indirim').value,
-            fiyat: document.getElementById('fiyat').value,
-            telefon: document.getElementById('telefon').value,
-            kampanyalar: [{ // Eski yapıya uyum için tekli kampanya dizisi
-                urun: document.getElementById('urun').value,
-                aciklama: document.getElementById('aciklama').value,
-                resim: document.getElementById('resim').value,
-                fiyat: document.getElementById('fiyat').value,
-                indirim: document.getElementById('indirim').value
-            }]
+            eski_fiyat: document.getElementById('eski').value,
+            fiyat: document.getElementById('yeni').value,
+            telefon: document.getElementById('tel').value
         };
-
-        status.innerHTML = "Sistem İşleniyor...";
-
+        document.getElementById('status').innerText = "Yükleniyor...";
         try {
             const res = await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`);
             const file = await res.json();
-            
             await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`, {
                 method: "PUT",
                 headers: { "Authorization": `token ${AUTH}`, "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: "VIP Catalog Update",
-                    content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))),
-                    sha: file.sha
-                })
+                body: JSON.stringify({ message: "VIP Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
             });
-            status.innerHTML = "<b style='color:var(--gold)'>✅ KAMPANYA BAŞARIYLA YAYINLANDI!</b>";
-        } catch (e) {
-            status.innerHTML = "<b style='color:red'>❌ HATA OLUŞTU!</b>";
-        }
+            document.getElementById('status').innerHTML = "<b style='color:#d4af37'>✅ YAYINLANDI!</b>";
+        } catch (e) { document.getElementById('status').innerText = "Hata!"; }
     }
 </script>
 </body>

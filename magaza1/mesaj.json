@@ -1,22 +1,11 @@
 {
-  "magaza": "fatih halıcılık",
-  "slogan": "şlmek şlmek",
-  "telefon": "905373583095",
-  "sayfa_sayisi": "2",
-  "kampanyalar": [
-    {
-      "urun": "werfefesf",
-      "aciklama": "efsefesges",
-      "resim": "https://www.ezgihali.com/wp-content/uploads/2022/03/WhatsApp-Image-2022-06-30-at-18.36.48-1500x1126.jpeg",
-      "fiyat": "57657",
-      "indirim": "20"
-    },
-    {
-      "urun": "dfgdgdg",
-      "aciklama": "dgdgdg",
-      "resim": "dgdsg",
-      "fiyat": "gdsgdsg",
-      "indirim": "dgdg"
-    }
-  ]
+  "magaza": "FTHLABZ HALICILIK",
+  "slogan": "Dokusunda Kalite Var",
+  "urun": "Saray Serisi 6m²",
+  "aciklama": "Leke tutmaz, %100 Pamuk tabanlıdır. Özel dokuma serisi.",
+  "resim": "https://images.unsplash.com/photo-1575414003591-ece8d0416c7a?q=80&w=800",
+  "indirim": "%20 İNDİRİM",
+  "eski_fiyat": "8.500 TL",
+  "fiyat": "6.800 TL",
+  "telefon": "905000000000"
 }

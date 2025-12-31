@@ -2,47 +2,65 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>FTHLABZ | Catalog Admin</title>
+    <title>SECURE CATALOG | ADMIN</title>
     <style>
-        body { background: #050505; color: #c5a059; font-family: sans-serif; padding: 20px; }
-        .panel { max-width: 500px; margin: 0 auto; background: #111; padding: 30px; border: 1px solid #222; }
-        .page-block { border: 1px solid #333; padding: 15px; margin-bottom: 20px; }
-        input { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #444; color: #fff; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #c5a059; border: none; font-weight: bold; cursor: pointer; margin-top: 20px; }
+        body { background: #000; color: #d4af37; font-family: 'Segoe UI', sans-serif; padding: 40px; display: flex; justify-content: center; }
+        .admin-box { width: 100%; max-width: 600px; background: #0a0a0a; border: 1px solid #222; padding: 30px; border-radius: 10px; }
+        h1 { font-weight: 200; letter-spacing: 5px; text-align: center; border-bottom: 1px solid #222; padding-bottom: 20px; }
+        .input-group { margin-bottom: 25px; }
+        label { display: block; font-size: 0.7rem; letter-spacing: 2px; margin-bottom: 10px; color: #888; }
+        input { width: 100%; background: #000; border: 1px solid #333; padding: 15px; color: #fff; outline: none; transition: 0.3s; }
+        input:focus { border-color: #d4af37; }
+        .page-editor { background: #111; padding: 20px; margin-top: 20px; border-left: 3px solid #d4af37; }
+        button { width: 100%; padding: 20px; background: #d4af37; color: #000; border: none; font-weight: bold; letter-spacing: 3px; cursor: pointer; margin-top: 30px; }
+        #status { text-align: center; margin-top: 20px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="panel">
-        <h2 style="text-align: center;">KATALOG YÖNETİMİ</h2>
-        <input type="text" id="magaza" placeholder="Mağaza Adı">
-        <input type="text" id="slogan" placeholder="Mağaza Sloganı">
-        <input type="number" id="sayfa_sayisi" placeholder="Sayfa Sayısı (1-5)" onchange="renderPages()">
-        <input type="text" id="telefon" placeholder="WhatsApp (90...)">
+    <div class="admin-box">
+        <h1>CATALOG MIMAR</h1>
         
-        <div id="pages-container"></div>
-        
-        <button onclick="saveAll()">TÜM KATALOĞU GÜNCELLE</button>
-        <p id="status" style="text-align:center"></p>
+        <div class="input-group">
+            <label>MAĞAZA ADI</label>
+            <input type="text" id="magaza" placeholder="Örn: Saray Halı VIP">
+        </div>
+        <div class="input-group">
+            <label>SLOGAN</label>
+            <input type="text" id="slogan" placeholder="Örn: Evinize Gelen Zarafet">
+        </div>
+        <div class="input-group">
+            <label>KAMPANYALI SAYFA SAYISI</label>
+            <input type="number" id="sayfa_sayisi" min="1" max="10" onchange="createEditors()" placeholder="Sayfa sayısını girin (Örn: 3)">
+        </div>
+        <div class="input-group">
+            <label>SİPARİŞ WHATSAPP (90...)</label>
+            <input type="text" id="telefon">
+        </div>
+
+        <div id="editor-container"></div>
+
+        <button onclick="publish()">KATALOĞU DÜNYAYA AÇ</button>
+        <div id="status"></div>
     </div>
 
     <script>
-        function renderPages() {
+        function createEditors() {
             const count = document.getElementById('sayfa_sayisi').value;
-            const container = document.getElementById('pages-container');
+            const container = document.getElementById('editor-container');
             container.innerHTML = "";
             for(let i=1; i<=count; i++) {
                 container.innerHTML += `
-                    <div class="page-block">
-                        <div style="font-size: 0.7rem; color: #888;">SAYFA ${i} İÇERİĞİ</div>
-                        <input type="text" class="p-urun" placeholder="Ürün Adı">
-                        <input type="text" class="p-fiyat" placeholder="Fiyat">
-                        <input type="text" class="p-resim" placeholder="Resim URL">
+                    <div class="page-editor">
+                        <div style="font-size: 0.6rem; color: #d4af37; margin-bottom: 10px;">SAYFA #${i} AYARLARI</div>
+                        <input type="text" class="p-urun" placeholder="Ürün Adı (Örn: Elit Kaşmir)">
+                        <input type="text" class="p-fiyat" placeholder="Fiyat (Örn: 5.400 TL)">
+                        <input type="text" class="p-resim" placeholder="Görsel Linki">
                     </div>
                 `;
             }
         }
 
-        async function saveAll() {
+        async function publish() {
             const _p = ["gh", "p_", "vN8qBFrmBN", "NZfYen0xVk", "iKmKUyaE5R38wFdA"];
             const AUTH = _p.join('');
             const kampanlar = [];
@@ -57,13 +75,12 @@
             const data = {
                 magaza: document.getElementById('magaza').value,
                 slogan: document.getElementById('slogan').value,
-                sayfa_sayisi: document.getElementById('sayfa_sayisi').value,
                 telefon: document.getElementById('telefon').value,
                 kampanyalar: kampanlar
             };
 
             const status = document.getElementById('status');
-            status.innerText = "Katalog İşleniyor...";
+            status.innerText = "Sistem İşleniyor...";
 
             try {
                 const res = await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`);
@@ -71,10 +88,10 @@
                 await fetch(`https://api.github.com/repos/fthlabz/secure-catalog/contents/magaza1/mesaj.json`, {
                     method: "PUT",
                     headers: { "Authorization": `token ${AUTH}`, "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: "Multi-Page Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
+                    body: JSON.stringify({ message: "VIP Multi-Page Update", content: btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2)))), sha: file.sha })
                 });
-                status.innerText = "KATALOG YAYINA ALINDI!";
-            } catch (e) { status.innerText = "HATA!"; }
+                status.innerHTML = "<span style='color:green'>✅ KATALOG YAYINDA!</span>";
+            } catch (e) { status.innerText = "❌ Hata!"; }
         }
     </script>
 </body>

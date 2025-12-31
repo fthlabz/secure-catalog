@@ -8,78 +8,93 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root { --gold: #d4af37; --red: #ef4444; --bg: #050505; }
-        body { background: var(--bg); color: white; font-family: 'Montserrat', sans-serif; margin: 0; overflow: hidden; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        body, html { margin: 0; padding: 0; background: var(--bg); color: white; font-family: 'Montserrat', sans-serif; overflow: hidden; height: 100vh; }
         
-        .card { width: 90%; max-width: 420px; background: #0a0a0a; border: 1px solid #222; padding: 40px 20px; text-align: center; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        .slider { display: flex; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); height: 100vh; }
+        .slide { min-width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; position: relative; }
+
+        .card { width: 85%; max-width: 400px; background: #0a0a0a; border: 1px solid #222; padding: 35px 20px; text-align: center; position: relative; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
         
-        .promo-badge { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--red); color: white; padding: 8px 25px; font-weight: bold; font-size: 0.8rem; letter-spacing: 2px; z-index: 10; border-radius: 50px; box-shadow: 0 5px 15px rgba(239, 68, 68, 0.4); }
+        /* İndirim Müjdesi - Taşma Düzeltildi */
+        .promo-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--red); color: white; padding: 6px 18px; font-weight: bold; font-size: 0.7rem; letter-spacing: 1px; z-index: 10; border-radius: 50px; white-space: nowrap; }
 
-        .img-box { width: 100%; height: 300px; background-size: cover; background-position: center; margin: 25px 0; border: 1px solid #1a1a1a; position: relative; }
-        .discount-tag { position: absolute; bottom: 15px; left: 15px; background: var(--red); color: white; padding: 5px 12px; font-weight: bold; font-size: 0.9rem; }
+        .img-box { width: 100%; height: 280px; background-size: cover; background-position: center; margin: 20px 0; border: 1px solid #1a1a1a; position: relative; }
+        .discount-tag { position: absolute; bottom: 12px; left: 12px; background: var(--red); color: white; padding: 4px 10px; font-weight: bold; font-size: 0.8rem; }
         
-        .store-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--gold); margin: 0; text-transform: uppercase; letter-spacing: 2px; }
-        .store-slogan { font-size: 0.65rem; letter-spacing: 4px; color: #555; margin-top: 5px; text-transform: uppercase; }
+        .store-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--gold); margin: 0; text-transform: uppercase; letter-spacing: 2px; }
+        .p-name { font-size: 1.1rem; font-weight: 600; margin: 15px 0 5px 0; color: #fff; text-transform: uppercase; }
+        .p-desc { font-size: 0.8rem; color: #888; margin-bottom: 15px; line-height: 1.4; height: 40px; overflow: hidden; }
 
-        .p-name { font-size: 1.3rem; font-weight: 600; margin: 20px 0 5px 0; color: #fff; text-transform: uppercase; }
-        .p-desc { font-size: 0.85rem; color: #888; margin-bottom: 20px; line-height: 1.5; padding: 0 10px; }
+        .price-area { display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px; }
+        /* Eski Fiyat - Renk ve Çizgi Belirginleştirildi */
+        .old-p { text-decoration: line-through; text-decoration-color: var(--red); color: #888; font-size: 1rem; font-weight: 500; }
+        .new-p { color: var(--gold); font-size: 2.2rem; font-weight: bold; font-family: 'Playfair Display', serif; }
 
-        .price-area { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 30px; }
-        .old-p { text-decoration: line-through; color: #444; font-size: 1.2rem; }
-        .new-p { color: var(--gold); font-size: 2.5rem; font-weight: bold; font-family: 'Playfair Display', serif; }
-
-        .wa-btn { display: block; border: 1px solid var(--gold); color: var(--gold); padding: 18px; text-decoration: none; font-weight: bold; letter-spacing: 3px; font-size: 0.8rem; transition: 0.4s; }
-        .wa-btn:hover { background: var(--gold); color: #000; }
+        .wa-btn { display: block; border: 1px solid var(--gold); color: var(--gold); padding: 14px; text-decoration: none; font-weight: bold; letter-spacing: 2px; font-size: 0.75rem; transition: 0.4s; }
         
-        .power-mark { position: fixed; top: 20px; left: 20px; font-size: 0.5rem; letter-spacing: 5px; color: #222; }
+        .nav-info { position: absolute; bottom: 20px; font-size: 0.6rem; color: #444; letter-spacing: 2px; }
+        .power-mark { position: fixed; top: 15px; left: 15px; font-size: 0.5rem; letter-spacing: 3px; color: #222; }
     </style>
 </head>
 <body>
     <div class="power-mark">FTHLABZ POWER</div>
-
-    <div class="card">
-        <div class="promo-badge">BÜYÜK İNDİRİM MÜJDESİ!</div>
-        <h1 class="store-title" id="m-adi">-</h1>
-        <div class="store-slogan" id="m-slogan">-</div>
-
-        <div class="img-box" id="m-resim">
-            <div class="discount-tag" id="m-indirim">-</div>
-        </div>
-
-        <div class="p-name" id="m-urun">-</div>
-        <div class="p-desc" id="m-aciklama">-</div>
-
-        <div class="price-area">
-            <span class="old-p" id="m-eski">-</span>
-            <span class="new-p" id="m-yeni">-</span>
-        </div>
-
-        <a href="#" id="m-wa" class="wa-btn">SİPARİŞ VER</a>
-    </div>
+    <div class="slider" id="slider"></div>
+    <div class="nav-info" id="nav-info" style="left:50%; transform:translateX(-50%)">KAYDIRIN • 1 / 3</div>
 
     <script>
+        let current = 0;
+        let total = 0;
+
         async function init() {
-            try {
-                const res = await fetch('mesaj.json?v=' + Date.now());
-                const data = await res.json();
-
-                document.getElementById('m-adi').innerText = data.magaza;
-                document.getElementById('m-slogan').innerText = data.slogan;
-                document.getElementById('m-resim').style.backgroundImage = `url('${data.resim}')`;
-                document.getElementById('m-indirim').innerText = data.indirim;
-                document.getElementById('m-urun').innerText = data.urun;
-                document.getElementById('m-aciklama').innerText = data.aciklama;
-                document.getElementById('m-eski').innerText = data.eski_fiyat;
-                document.getElementById('m-yeni').innerText = data.fiyat;
-                document.getElementById('m-wa').href = `https://wa.me/${data.telefon}`;
-
-                // Efektler
-                setTimeout(() => {
-                    confetti({ particleCount: 150, spread: 70, origin: { y: 0.7 }, colors: ['#d4af37', '#ffffff', '#ef4444'] });
-                    if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-                }, 600);
-            } catch (e) { console.log("Hata:", e); }
+            const res = await fetch('mesaj.json?v=' + Date.now());
+            const data = await res.json();
+            total = data.kampanyalar.length;
+            
+            const slider = document.getElementById('slider');
+            data.kampanyalar.forEach((item, i) => {
+                slider.innerHTML += `
+                    <div class="slide">
+                        <div class="card">
+                            <div class="promo-badge">BÜYÜK İNDİRİM MÜJDESİ!</div>
+                            <h1 class="store-title">${data.magaza}</h1>
+                            <div class="img-box" style="background-image: url('${item.resim}')">
+                                <div class="discount-tag">${item.indirim}</div>
+                            </div>
+                            <div class="p-name">${item.urun}</div>
+                            <div class="p-desc">${item.aciklama}</div>
+                            <div class="price-area">
+                                <span class="old-p">${item.eski_fiyat} ₺</span>
+                                <span class="new-p">${item.fiyat} ₺</span>
+                            </div>
+                            <a href="https://wa.me/${data.telefon}" class="wa-btn">SİPARİŞ VER</a>
+                        </div>
+                    </div>
+                `;
+            });
+            startEffects();
+            setupTouch();
         }
-        window.onload = init;
+
+        function startEffects() {
+            confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 }, colors: ['#d4af37', '#ffffff', '#ef4444'] });
+            if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+        }
+
+        function setupTouch() {
+            let startX = 0;
+            window.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+            window.addEventListener('touchend', e => {
+                let diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0 && current < total - 1) current++;
+                    else if (diff < 0 && current > 0) current--;
+                    document.getElementById('slider').style.transform = `translateX(-${current * 100}vw)`;
+                    document.getElementById('nav-info').innerText = `KAYDIRIN • ${current + 1} / ${total}`;
+                    startEffects();
+                }
+            });
+        }
+        init();
     </script>
 </body>
 </html>

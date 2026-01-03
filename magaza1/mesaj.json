@@ -1,23 +1,6 @@
 {
-  "magaza": "FATİH HALICILIK",
-  "slogan": "SLOGAN",
-  "telefon": "905373583095",
-  "kampanyalar": [
-    {
-      "urun": "ÜRÜN ADI",
-      "aciklama": "AÇIKLAMA",
-      "resim": "https://www.halicizade.com/cdn/shop/files/ElDokumaAnadoluDesenliRengarenkYunTaspinarHali_9.jpg?v=1707137288&width=2048",
-      "eski_fiyat": "8500₺",
-      "fiyat": "6500₺",
-      "indirim": "%15"
-    },
-    {
-      "urun": "ÜRÜN ADI",
-      "aciklama": "AÇIKLAMA",
-      "resim": "RESİM URL",
-      "eski_fiyat": "ESKİ FİYAT",
-      "fiyat": "YENİ FİYAT",
-      "indirim": "15"
-    }
-  ]
+  "magaza": "",
+  "slogan": "",
+  "telefon": "",
+  "kampanyalar": []
 }
